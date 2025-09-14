@@ -28,7 +28,6 @@ import {
   RadialBarChart,
   RadialBar,
   PolarAngleAxis,
-  Heatmap,
 } from 'recharts'
 
 interface OperatingConditions {

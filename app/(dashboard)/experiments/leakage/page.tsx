@@ -105,7 +105,7 @@ export default function LeakageCurrentTestPage() {
           const updatedChannels = channels.map(channel => {
             if (channel.enabled) {
               const current = generateLeakageData(channel.id, newTime)
-              const status = current > 5 ? 'danger' : current > 3 ? 'warning' : 'normal'
+              const status: 'normal' | 'warning' | 'danger' = current > 5 ? 'danger' : current > 3 ? 'warning' : 'normal'
               return { ...channel, current, status }
             }
             return channel
