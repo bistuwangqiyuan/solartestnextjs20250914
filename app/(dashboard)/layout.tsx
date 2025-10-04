@@ -17,6 +17,7 @@ import {
   FlaskConical,
   AlertTriangle,
   PlayCircle,
+  HelpCircle,
 } from 'lucide-react'
 
 interface NavItem {
@@ -43,6 +44,7 @@ const navigation: NavItem[] = [
   { name: '数据管理', href: '/data', icon: <Database className="h-5 w-5" /> },
   { name: '报告中心', href: '/reports', icon: <FileBarChart className="h-5 w-5" /> },
   { name: '系统设置', href: '/settings', icon: <Settings className="h-5 w-5" /> },
+  { name: '帮助中心', href: '/help', icon: <HelpCircle className="h-5 w-5" /> },
 ]
 
 export default function DashboardLayout({ children }: { children: ReactNode }) {
@@ -72,12 +74,10 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
       </AnimatePresence>
 
       {/* Sidebar */}
-      <motion.aside
-        initial={{ x: -300 }}
-        animate={{ x: sidebarOpen ? 0 : -300 }}
-        transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-        className={`fixed inset-y-0 left-0 z-50 w-72 bg-industrial-dark border-r border-industrial-light lg:relative lg:translate-x-0 lg:transition-none`}
-        style={{ transform: 'translateX(0)' }}
+      <aside
+        className={`fixed inset-y-0 left-0 z-50 w-72 bg-industrial-dark border-r border-industrial-light transition-transform duration-300 lg:relative lg:translate-x-0 ${
+          sidebarOpen ? 'translate-x-0' : '-translate-x-full'
+        } lg:block`}
       >
         <div className="flex h-full flex-col">
           {/* Logo */}
@@ -183,7 +183,7 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
             </div>
           </div>
         </div>
-      </motion.aside>
+      </aside>
 
       {/* Main content */}
       <div className="flex-1 flex flex-col overflow-hidden">

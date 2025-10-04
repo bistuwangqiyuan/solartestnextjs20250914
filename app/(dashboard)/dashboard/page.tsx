@@ -78,14 +78,16 @@ const performanceRadar = [
 function DeviceModel3D() {
   return (
     <Canvas camera={{ position: [5, 5, 5], fov: 50 }}>
-      <ambientLight intensity={0.5} />
-      <pointLight position={[10, 10, 10]} intensity={1} />
-      <pointLight position={[-10, -10, -10]} intensity={0.5} color="#00d4ff" />
+      <ambientLight intensity={0.8} />
+      <pointLight position={[10, 10, 10]} intensity={1.2} />
+      <pointLight position={[-10, -10, -10]} intensity={0.8} color="#00d4ff" />
+      <pointLight position={[0, 15, 0]} intensity={0.6} color="#ffffff" />
+      <directionalLight position={[5, 10, 5]} intensity={0.5} color="#ffffff" />
       
       <group rotation={[0, Date.now() * 0.0001, 0]}>
         {/* Main body */}
         <Box args={[3, 2, 1]} position={[0, 0, 0]}>
-          <meshStandardMaterial color="#2a2d3a" metalness={0.8} roughness={0.2} />
+          <meshStandardMaterial color="#3a4a5a" metalness={0.7} roughness={0.3} />
         </Box>
         
         {/* Connectors */}
@@ -302,7 +304,7 @@ export default function DashboardPage() {
             className="data-card"
           >
             <h3 className="text-lg font-semibold text-white mb-4">设备3D模型</h3>
-            <div className="h-64 bg-industrial-darker rounded-lg overflow-hidden">
+            <div className="h-64 bg-gray-700 rounded-lg overflow-hidden border border-gray-600">
               <DeviceModel3D />
             </div>
             <div className="mt-4 space-y-2">
