@@ -1,0 +1,46 @@
+{
+  "name": "PVRSD光伏快速关断器测试系统",
+  "shortName": "PVRSD测试系统",
+  "description": "业界领先的光伏快速关断器测试数据管理平台",
+  "url": "https://pvrsd-test-system.netlify.app",
+  "logo": "https://pvrsd-test-system.netlify.app/logo.png",
+  "features": [
+    "高压测试 (600V/1000V/1500V DC)",
+    "泄漏电流检测 (0.1μA精度)",
+    "实时数据监控 (10Hz刷新率)",
+    "智能数据分析",
+    "自动报告生成",
+    "3D设备可视化",
+    "多用户协作",
+    "符合国际标准 (IEC 62109, UL 1741)"
+  ],
+  "targetAudience": [
+    "测试工程师",
+    "数据分析师",
+    "质量管理员",
+    "光伏企业",
+    "认证机构"
+  ],
+  "technicalSpecs": {
+    "voltageRange": "600V - 1500V DC",
+    "currentPrecision": "0.1μA",
+    "samplingRate": "10Hz",
+    "dataStorage": "无限制",
+    "responseTime": "< 2秒",
+    "uptime": "99.9%"
+  },
+  "certifications": [
+    "IEC 62109-1",
+    "UL 1741",
+    "GB/T 37408"
+  ],
+  "languages": [
+    "zh-CN",
+    "en-US"
+  ],
+  "socialMedia": {
+    "twitter": "@pvrsd_system",
+    "github": "pvrsd-system"
+  }
+}
+

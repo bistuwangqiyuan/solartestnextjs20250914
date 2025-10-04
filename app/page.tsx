@@ -4,6 +4,8 @@ import { useRouter } from 'next/navigation'
 import { motion } from 'framer-motion'
 import { Activity, Database, FileBarChart, Zap, Shield, BarChart3 } from 'lucide-react'
 
+// 首页SEO元数据通过layout.tsx的metadata导出
+
 export default function LandingPage() {
   const router = useRouter()
 

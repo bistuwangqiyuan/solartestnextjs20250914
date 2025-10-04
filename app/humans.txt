@@ -1,0 +1,19 @@
+/* TEAM */
+团队名称: PVRSD开发团队
+网站: https://pvrsd-test-system.netlify.app
+位置: 中国
+
+/* THANKS */
+Next.js Team
+Supabase Team
+Vercel Team
+Open Source Community
+
+/* SITE */
+标准: HTML5, CSS3, JavaScript ES6+
+组件: React 18, Next.js 14
+样式: Tailwind CSS
+后端: Supabase
+部署: Netlify
+最后更新: 2025/10/04
+
