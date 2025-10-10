@@ -1,11 +1,23 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  swcMinify: true,
   
   // 图片优化配置
   images: {
-    domains: ['localhost', 'pvrsd-test-system.netlify.app', 'zzyueuweeoakopuuwfau.supabase.co'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'pvrsd-test-system.netlify.app',
+      },
+      {
+        protocol: 'https',
+        hostname: 'zzyueuweeoakopuuwfau.supabase.co',
+      },
+      {
+        protocol: 'http',
+        hostname: 'localhost',
+      },
+    ],
     formats: ['image/avif', 'image/webp'],
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
@@ -17,12 +29,6 @@ const nextConfig = {
   
   // 性能优化
   poweredByHeader: false, // 移除 X-Powered-By 头部
-  
-  // 国际化配置
-  i18n: {
-    locales: ['zh-CN', 'en-US'],
-    defaultLocale: 'zh-CN',
-  },
   
   // HTTP头部安全配置
   async headers() {
