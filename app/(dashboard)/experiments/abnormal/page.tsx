@@ -10,8 +10,6 @@ import {
   Download,
   Settings,
   Zap,
-  Shield,
-  Timer,
   RefreshCw,
   AlertCircle,
 } from 'lucide-react'
@@ -27,15 +25,12 @@ import {
   BarChart,
   Bar,
   Cell,
-  RadialBarChart,
-  RadialBar,
-  PolarAngleAxis,
 } from 'recharts'
 
 interface FaultTest {
   id: string
   name: string
-  type: 'overvoltage' | 'overcurrent' | 'shortcircuit' | 'reverse'
+  type: 'overvoltage' | 'overcurrent' | 'shortcircuit'
   status: 'pending' | 'running' | 'passed' | 'failed'
   parameters: {
     testValue: number
@@ -60,8 +55,8 @@ const generateFaultData = (time: number, faultType: string, triggered: boolean) 
   if (!triggered) {
     return {
       time,
-      voltage: 1000 + Math.random() * 10,
-      current: 10 + Math.random() * 0.5,
+      voltage: 48 + Math.random() * 2,
+      current: 5 + Math.random() * 0.5,
       status: 'normal',
     }
   }
@@ -72,8 +67,8 @@ const generateFaultData = (time: number, faultType: string, triggered: boolean) 
   if (time < faultTime) {
     return {
       time,
-      voltage: 1000 + Math.random() * 10,
-      current: 10 + Math.random() * 0.5,
+      voltage: 48 + Math.random() * 2,
+      current: 5 + Math.random() * 0.5,
       status: 'normal',
     }
   } else if (time < faultTime + responseTime) {
@@ -82,29 +77,23 @@ const generateFaultData = (time: number, faultType: string, triggered: boolean) 
       case 'overvoltage':
         return {
           time,
-          voltage: 1500 + Math.random() * 50,
-          current: 12 + Math.random() * 2,
+          voltage: 90 + Math.random() * 5,
+          current: 7 + Math.random() * 1,
           status: 'fault',
         }
       case 'overcurrent':
         return {
           time,
-          voltage: 950 + Math.random() * 20,
+          voltage: 45 + Math.random() * 3,
           current: 30 + Math.random() * 5,
           status: 'fault',
         }
       case 'shortcircuit':
-        return {
-          time,
-          voltage: 50 + Math.random() * 10,
-          current: 100 + Math.random() * 20,
-          status: 'fault',
-        }
       default:
         return {
           time,
-          voltage: -1000 + Math.random() * 50,
-          current: -10 + Math.random() * 2,
+          voltage: 2 + Math.random() * 1,
+          current: 100 + Math.random() * 20,
           status: 'fault',
         }
     }
@@ -128,7 +117,7 @@ export default function AbnormalOperationTestPage() {
         name: '过压保护测试',
         type: 'overvoltage',
         status: 'pending',
-        parameters: { testValue: 1500, duration: 10, limit: 30 },
+        parameters: { testValue: 90, duration: 10, limit: 30 },
       },
       {
         id: '2',
@@ -144,13 +133,6 @@ export default function AbnormalOperationTestPage() {
         status: 'pending',
         parameters: { testValue: 0, duration: 5, limit: 30 },
       },
-      {
-        id: '4',
-        name: '反接保护测试',
-        type: 'reverse',
-        status: 'pending',
-        parameters: { testValue: -1000, duration: 10, limit: 30 },
-      },
     ],
   })
   
@@ -158,8 +140,6 @@ export default function AbnormalOperationTestPage() {
   const [currentTestData, setCurrentTestData] = useState<any[]>([])
   const [elapsedTime, setElapsedTime] = useState(0)
   const [showSettings, setShowSettings] = useState(false)
-  const [lifetimeTestCount, setLifetimeTestCount] = useState(0)
-  const [lifetimeTestTarget, setLifetimeTestTarget] = useState(10000)
   const intervalRef = useRef<NodeJS.Timeout | null>(null)
 
   useEffect(() => {
@@ -250,26 +230,10 @@ export default function AbnormalOperationTestPage() {
     setElapsedTime(0)
   }
 
-  const handleLifetimeTest = () => {
-    // Simulate lifetime test
-    const interval = setInterval(() => {
-      setLifetimeTestCount(prev => {
-        if (prev >= lifetimeTestTarget - 1) {
-          clearInterval(interval)
-          return lifetimeTestTarget
-        }
-        return prev + 1
-      })
-    }, 10)
-  }
-
   // Calculate overall test progress
   const overallProgress = testSequence.currentTest >= 0 
     ? ((testSequence.currentTest + (elapsedTime / (testSequence.tests[testSequence.currentTest]?.parameters.duration || 1))) / testSequence.tests.length) * 100
     : 0
-
-  // Lifetime test progress
-  const lifetimeProgress = (lifetimeTestCount / lifetimeTestTarget) * 100
 
   return (
     <div className="space-y-6">
@@ -306,7 +270,7 @@ export default function AbnormalOperationTestPage() {
       {/* Test sequence overview */}
       <div className="data-card">
         <h3 className="text-lg font-semibold text-white mb-4">测试序列</h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {testSequence.tests.map((test, index) => (
             <motion.div
               key={test.id}
@@ -324,13 +288,11 @@ export default function AbnormalOperationTestPage() {
                 <div className={`p-2 rounded ${
                   test.type === 'overvoltage' ? 'bg-industrial-warning/20' :
                   test.type === 'overcurrent' ? 'bg-industrial-danger/20' :
-                  test.type === 'shortcircuit' ? 'bg-industrial-danger/30' :
-                  'bg-industrial-cyan/20'
+                  'bg-industrial-danger/30'
                 }`}>
                   {test.type === 'overvoltage' ? <Zap className="h-4 w-4 text-industrial-warning" /> :
                    test.type === 'overcurrent' ? <AlertCircle className="h-4 w-4 text-industrial-danger" /> :
-                   test.type === 'shortcircuit' ? <AlertTriangle className="h-4 w-4 text-industrial-danger" /> :
-                   <Shield className="h-4 w-4 text-industrial-cyan" />}
+                   <AlertTriangle className="h-4 w-4 text-industrial-danger" />}
                 </div>
                 <div className={`status-indicator ${
                   test.status === 'running' ? 'status-active' :
@@ -343,8 +305,7 @@ export default function AbnormalOperationTestPage() {
               <p className="text-xs text-gray-400">
                 {test.type === 'overvoltage' ? `${test.parameters.testValue}V` :
                  test.type === 'overcurrent' ? `${test.parameters.testValue}A` :
-                 test.type === 'shortcircuit' ? '输出短路' :
-                 '极性反接'}
+                 '输出短路'}
               </p>
               {test.result && (
                 <div className="mt-2 pt-2 border-t border-industrial-light">
@@ -373,7 +334,7 @@ export default function AbnormalOperationTestPage() {
       </div>
 
       {/* Control panel */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 gap-6">
         {/* Test control */}
         <div className="data-card">
           <h3 className="text-lg font-semibold text-white mb-4">测试控制</h3>
@@ -451,56 +412,6 @@ export default function AbnormalOperationTestPage() {
           )}
         </div>
 
-        {/* Lifetime test */}
-        <div className="data-card">
-          <h3 className="text-lg font-semibold text-white mb-4">寿命测试</h3>
-          <div className="mb-4">
-            <div className="flex items-center justify-between mb-2">
-              <span className="text-sm text-gray-400">测试次数</span>
-              <span className="text-sm font-medium text-white">
-                {lifetimeTestCount} / {lifetimeTestTarget}
-              </span>
-            </div>
-            <div className="w-full bg-industrial-darker rounded-full h-2">
-              <div
-                className="bg-gradient-to-r from-industrial-cyan to-industrial-success h-2 rounded-full transition-all duration-300"
-                style={{ width: `${lifetimeProgress}%` }}
-              />
-            </div>
-          </div>
-          
-          <div className="h-32">
-            <ResponsiveContainer width="100%" height="100%">
-              <RadialBarChart cx="50%" cy="50%" innerRadius="60%" outerRadius="90%" data={[{ value: lifetimeProgress, fill: '#00d4ff' }]}>
-                <PolarAngleAxis
-                  type="number"
-                  domain={[0, 100]}
-                  angleAxisId={0}
-                  tick={false}
-                />
-                <RadialBar
-                  dataKey="value"
-                  cornerRadius={10}
-                  fill="#00d4ff"
-                  angleAxisId={0}
-                />
-                <text x="50%" y="50%" textAnchor="middle" dominantBaseline="middle" className="text-2xl font-bold fill-white">
-                  {lifetimeProgress.toFixed(0)}%
-                </text>
-              </RadialBarChart>
-            </ResponsiveContainer>
-          </div>
-          
-          <button
-            onClick={handleLifetimeTest}
-            disabled={lifetimeTestCount > 0 && lifetimeTestCount < lifetimeTestTarget}
-            className="w-full btn-industrial flex items-center justify-center gap-2 mt-4"
-          >
-            <Timer className="h-4 w-4" />
-            {lifetimeTestCount === 0 ? '开始寿命测试' : 
-             lifetimeTestCount >= lifetimeTestTarget ? '测试完成' : '测试进行中...'}
-          </button>
-        </div>
       </div>
 
       {/* Real-time chart */}
@@ -605,7 +516,7 @@ export default function AbnormalOperationTestPage() {
                     <td className="py-3 px-4 text-center text-gray-300">
                       {test.type === 'overvoltage' ? `${test.parameters.testValue}V` :
                        test.type === 'overcurrent' ? `${test.parameters.testValue}A` :
-                       test.type === 'shortcircuit' ? '短路' : '反接'}
+                       '短路'}
                     </td>
                     <td className="py-3 px-4 text-center text-gray-300">
                       {test.result?.responseTime || '-'} ms

@@ -40,11 +40,13 @@ import { OrbitControls, Box, Sphere } from '@react-three/drei'
 // Mock data generation
 const generateRealtimeData = () => {
   const now = new Date()
+  const voltage = 11.5 + Math.random() * 1
+  const current = 4.5 + Math.random() * 1
   return {
     timestamp: now.toLocaleTimeString(),
-    voltage: 1000 + Math.random() * 100,
-    current: 10 + Math.random() * 2,
-    power: 10000 + Math.random() * 1000,
+    voltage,
+    current,
+    power: voltage * current,
     temperature: 25 + Math.random() * 10,
   }
 }
@@ -126,7 +128,7 @@ export default function DashboardPage() {
   const stats = [
     {
       title: '今日测试',
-      value: '156',
+      value: '35',
       change: '+12%',
       icon: <Activity className="h-6 w-6" />,
       color: 'text-industrial-cyan',
@@ -310,7 +312,7 @@ export default function DashboardPage() {
             <div className="mt-4 space-y-2">
               <div className="flex justify-between text-sm">
                 <span className="text-gray-400">型号</span>
-                <span className="text-white">PVRSD-1500V</span>
+                <span className="text-white">SP2000S1-485</span>
               </div>
               <div className="flex justify-between text-sm">
                 <span className="text-gray-400">温度</span>

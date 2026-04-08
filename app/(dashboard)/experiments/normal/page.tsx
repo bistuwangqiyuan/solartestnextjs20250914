@@ -50,18 +50,20 @@ interface HeatmapData {
 }
 
 // Generate realistic operating data
-const generateOperatingData = (time: number, power: number): OperatingConditions => {
-  const inputVoltage = 800 + Math.sin(time / 10) * 50 + Math.random() * 20
-  const efficiency = 0.96 - (power / 1500) * 0.02 + Math.random() * 0.01
-  const inputCurrent = power / inputVoltage / efficiency
+// inputVoltage < 50V, inputCurrent < 10A, power = voltage * current
+const generateOperatingData = (time: number): OperatingConditions => {
+  const inputVoltage = 30 + Math.sin(time / 10) * 8 + Math.random() * 5
+  const inputCurrent = 3 + Math.sin(time / 15) * 2.5 + Math.random() * 1.5
+  const inputPower = inputVoltage * inputCurrent
+  const efficiency = 0.96 - (inputPower / 500) * 0.02 + Math.random() * 0.01
   const outputVoltage = inputVoltage * 0.95
-  const outputCurrent = (power * efficiency) / outputVoltage
+  const outputCurrent = (inputPower * efficiency) / outputVoltage
   const powerFactor = 0.98 - Math.random() * 0.02
   const thd = 2 + Math.random() * 1
-  const temperature = 25 + (power / 1500) * 40 + Math.random() * 5
+  const temperature = 25 + (inputPower / 500) * 30 + Math.random() * 3
   
   return {
-    inputPower: power,
+    inputPower,
     inputVoltage,
     inputCurrent,
     outputVoltage,
@@ -95,14 +97,14 @@ export default function NormalOperationTestPage() {
   const [heatmapData, setHeatmapData] = useState<HeatmapData[]>([])
   const [elapsedTime, setElapsedTime] = useState(0)
   const [testParameters, setTestParameters] = useState({
-    powerRange: { min: 0, max: 1500 },
+    powerRange: { min: 0, max: 500 },
     temperatureRange: { min: -40, max: 85 },
-    voltageRange: { min: 150, max: 1500 },
+    voltageRange: { min: 0, max: 50 },
     loadType: 'resistive' as const,
     testDuration: 3600,
   })
   const [showSettings, setShowSettings] = useState(false)
-  const [currentPower, setCurrentPower] = useState(750)
+  const [currentPower, setCurrentPower] = useState(0)
   const intervalRef = useRef<NodeJS.Timeout | null>(null)
 
   useEffect(() => {
@@ -111,15 +113,10 @@ export default function NormalOperationTestPage() {
         setElapsedTime(prev => {
           const newTime = prev + 1
           
-          // Vary power throughout test
-          const power = testParameters.powerRange.min + 
-            (testParameters.powerRange.max - testParameters.powerRange.min) * 
-            (0.5 + 0.5 * Math.sin(newTime / 100))
-          setCurrentPower(power)
-          
-          // Generate new operating data
-          const newData = generateOperatingData(newTime, power)
+          // Generate new operating data (power = voltage * current)
+          const newData = generateOperatingData(newTime)
           setCurrentConditions(newData)
+          setCurrentPower(newData.inputPower)
           
           // Update time series
           const dataPoint = {
@@ -139,10 +136,10 @@ export default function NormalOperationTestPage() {
               efficiency: newData.efficiency * 100,
             }
             setEfficiencyData(prev => {
-              const existing = prev.find(p => Math.abs(p.power - effPoint.power) < 50)
+              const existing = prev.find(p => Math.abs(p.power - effPoint.power) < 20)
               if (existing) {
                 return prev.map(p => 
-                  Math.abs(p.power - effPoint.power) < 50 
+                  Math.abs(p.power - effPoint.power) < 20 
                     ? { ...p, efficiency: (p.efficiency + effPoint.efficiency) / 2 }
                     : p
                 )
