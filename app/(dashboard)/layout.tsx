@@ -18,13 +18,23 @@ import {
   AlertTriangle,
   PlayCircle,
   HelpCircle,
+  Code2,
+  Download,
+  ExternalLink,
 } from 'lucide-react'
+
+interface NavChild {
+  name: string
+  href: string
+  external?: boolean
+  icon?: ReactNode
+}
 
 interface NavItem {
   name: string
   href: string
   icon: ReactNode
-  children?: { name: string; href: string }[]
+  children?: NavChild[]
 }
 
 const navigation: NavItem[] = [
@@ -45,6 +55,25 @@ const navigation: NavItem[] = [
   { name: '报告中心', href: '/reports', icon: <FileBarChart className="h-5 w-5" /> },
   { name: '系统设置', href: '/settings', icon: <Settings className="h-5 w-5" /> },
   { name: '帮助中心', href: '/help', icon: <HelpCircle className="h-5 w-5" /> },
+  {
+    name: '代码仓库',
+    href: '#code-repo',
+    icon: <Code2 className="h-5 w-5" />,
+    children: [
+      {
+        name: '下载源码',
+        href: 'https://github.com/bistuwangqiyuan/solartestnextjs20250914/archive/refs/heads/main.zip',
+        external: true,
+        icon: <Download className="h-4 w-4" />,
+      },
+      {
+        name: 'GitHub 仓库',
+        href: 'https://github.com/bistuwangqiyuan/solartestnextjs20250914',
+        external: true,
+        icon: <ExternalLink className="h-4 w-4" />,
+      },
+    ],
+  },
 ]
 
 export default function DashboardLayout({ children }: { children: ReactNode }) {
@@ -136,6 +165,20 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
                           >
                             {item.children.map((child) => {
                               const isChildActive = pathname === child.href
+                              if (child.external) {
+                                return (
+                                  <a
+                                    key={child.href}
+                                    href={child.href}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="flex items-center gap-2 px-4 py-2 text-sm rounded-lg transition-all duration-200 text-gray-400 hover:bg-industrial-light hover:text-white"
+                                  >
+                                    {child.icon}
+                                    <span>{child.name}</span>
+                                  </a>
+                                )
+                              }
                               return (
                                 <Link
                                   key={child.href}
