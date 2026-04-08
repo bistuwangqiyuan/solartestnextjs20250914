@@ -42,19 +42,23 @@ interface TestData {
   temperature: number
 }
 
-// Generate mock test data
-const generateTestData = (seconds: number): TestData => {
-  const voltage = Math.min(1500, seconds * 50 + Math.random() * 10)
-  const current = (0.001 + Math.random() * 0.0001) * (voltage / 1000)
-  const resistance = voltage / current / 1000000 // MΩ
-  const temperature = 25 + Math.random() * 2 + seconds * 0.01
+// Generate high-voltage pulse test data:
+// voltage is at full level for the first 0.1s, then drops to 0
+const generateTestData = (timeSeconds: number, voltageLevel: number): TestData => {
+  const isHighPhase = timeSeconds <= 0.1
+  const voltage = isHighPhase ? voltageLevel + (Math.random() - 0.5) * 10 : Math.random() * 0.5
+  const current = isHighPhase
+    ? (0.001 + Math.random() * 0.0001) * (voltage / 1000)
+    : Math.random() * 0.00001
+  const resistance = voltage > 1 ? voltage / current / 1000000 : 0 // MΩ
+  const temperature = 25 + Math.random() * 0.5
 
   return {
-    time: seconds,
-    voltage,
-    current: current * 1000, // Convert to mA
-    resistance,
-    temperature,
+    time: parseFloat(timeSeconds.toFixed(1)),
+    voltage: parseFloat(voltage.toFixed(1)),
+    current: parseFloat((current * 1000).toFixed(4)), // mA
+    resistance: parseFloat(resistance.toFixed(1)),
+    temperature: parseFloat(temperature.toFixed(1)),
   }
 }
 
@@ -65,7 +69,7 @@ export default function HighVoltageTestPage() {
   const [elapsedTime, setElapsedTime] = useState(0)
   const [parameters, setParameters] = useState<TestParameter>({
     voltageLevel: 1000,
-    testDuration: 60,
+    testDuration: 1,
     rampRate: 100,
     standard: 'IEC-62109-1',
   })
@@ -76,20 +80,19 @@ export default function HighVoltageTestPage() {
     if (testStatus === 'running') {
       intervalRef.current = setInterval(() => {
         setElapsedTime(prev => {
-          const newTime = prev + 1
-          const newData = generateTestData(newTime)
+          const newTime = parseFloat((prev + 0.1).toFixed(1))
+          const newData = generateTestData(newTime, parameters.voltageLevel)
           setCurrentData(newData)
           setTestData(prevData => [...prevData, newData])
-          
-          // Auto stop when reaching test duration
+
           if (newTime >= parameters.testDuration) {
             setTestStatus('completed')
-            return prev
+            return newTime
           }
-          
+
           return newTime
         })
-      }, 1000)
+      }, 100)
     } else {
       if (intervalRef.current) {
         clearInterval(intervalRef.current)
@@ -101,7 +104,7 @@ export default function HighVoltageTestPage() {
         clearInterval(intervalRef.current)
       }
     }
-  }, [testStatus, parameters.testDuration])
+  }, [testStatus, parameters.testDuration, parameters.voltageLevel])
 
   const handleStart = () => {
     setTestStatus('running')
@@ -135,6 +138,9 @@ export default function HighVoltageTestPage() {
   }
 
   const formatTime = (seconds: number) => {
+    if (seconds < 60) {
+      return `${seconds.toFixed(1)}s`
+    }
     const mins = Math.floor(seconds / 60)
     const secs = seconds % 60
     return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`
@@ -203,9 +209,9 @@ export default function HighVoltageTestPage() {
                 disabled={testStatus !== 'idle'}
                 className="input-industrial w-full"
               >
-                <option value={60}>1分钟</option>
-                <option value={300}>5分钟</option>
-                <option value={3600}>60分钟</option>
+                <option value={1}>1秒</option>
+                <option value={2}>2秒</option>
+                <option value={5}>5秒</option>
               </select>
             </div>
             <div>
