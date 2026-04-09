@@ -46,9 +46,9 @@ interface TestData {
 // voltage is at full level for the first 0.1s, then drops to 0
 const generateTestData = (timeSeconds: number, voltageLevel: number): TestData => {
   const isHighPhase = timeSeconds <= 0.1
-  const voltage = isHighPhase ? voltageLevel + (Math.random() - 0.5) * 10 : Math.random() * 0.5
+  const voltage = isHighPhase ? voltageLevel + (Math.random() - 0.5) * 5 : Math.random() * 0.5
   const current = isHighPhase
-    ? (0.001 + Math.random() * 0.0001) * (voltage / 1000)
+    ? (0.005 + Math.random() * 0.001) * (voltage / 100)
     : Math.random() * 0.00001
   const resistance = voltage > 1 ? voltage / current / 1000000 : 0 // MΩ
   const temperature = 25 + Math.random() * 0.5
@@ -68,7 +68,7 @@ export default function HighVoltageTestPage() {
   const [currentData, setCurrentData] = useState<TestData | null>(null)
   const [elapsedTime, setElapsedTime] = useState(0)
   const [parameters, setParameters] = useState<TestParameter>({
-    voltageLevel: 1000,
+    voltageLevel: 100,
     testDuration: 1,
     rampRate: 100,
     standard: 'IEC-62109-1',
@@ -196,9 +196,9 @@ export default function HighVoltageTestPage() {
                 disabled={testStatus !== 'idle'}
                 className="input-industrial w-full"
               >
-                <option value={600}>600V DC</option>
-                <option value={1000}>1000V DC</option>
-                <option value={1500}>1500V DC</option>
+                <option value={50}>50V DC</option>
+                <option value={100}>100V DC</option>
+                <option value={200}>200V DC</option>
               </select>
             </div>
             <div>
