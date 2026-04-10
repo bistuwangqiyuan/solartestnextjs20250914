@@ -45,7 +45,7 @@ import { OrbitControls, Box, Sphere } from '@react-three/drei'
 const generateRealtimeData = () => {
   const now = new Date()
   const voltage = 11.5 + Math.random() * 1
-  const current = 4.5 + Math.random() * 1
+  const current = 2.8 + Math.random() * 0.4
   return {
     timestamp: now.toLocaleTimeString(),
     voltage,
