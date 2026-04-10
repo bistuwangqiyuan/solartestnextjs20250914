@@ -93,7 +93,7 @@ export default function HelpPage() {
           <div className="bg-industrial-cyan/10 border border-industrial-cyan/20 rounded-lg p-6">
             <h3 className="text-xl font-bold text-industrial-cyan mb-4 flex items-center gap-2">
               <Info className="h-6 w-6" />
-              PVRSD系统简介
+              SP2000S1-485 PVRSD系统简介
             </h3>
             <p className="text-gray-300 leading-relaxed">
               PVRSD（光伏快速关断器）测试系统是一个专业的工业级测试平台，用于对光伏快速关断器进行全面的性能测试和质量评估。
@@ -262,10 +262,10 @@ export default function HelpPage() {
               <h4 className="text-lg font-semibold text-white mb-4">统计卡片区域</h4>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {[
-                  { title: '今日测试', value: '156', change: '+12%', icon: <Activity className="h-6 w-6" />, color: 'text-industrial-cyan' },
-                  { title: '合格率', value: '98.7%', change: '+0.5%', icon: <CheckCircle className="h-6 w-6" />, color: 'text-industrial-success' },
-                  { title: '活跃设备', value: '12/20', change: '60%', icon: <Zap className="h-6 w-6" />, color: 'text-industrial-warning' },
-                  { title: '待处理告警', value: '3', change: '-2', icon: <AlertTriangle className="h-6 w-6" />, color: 'text-industrial-danger' }
+                  { title: '累计发电量', value: '326.8 kWh', change: '+3.5 kWh', icon: <Zap className="h-6 w-6" />, color: 'text-industrial-cyan' },
+                  { title: '今日发电量', value: '3.2 kWh', change: '+8.3%', icon: <Activity className="h-6 w-6" />, color: 'text-industrial-success' },
+                  { title: '累计收益', value: '¥163.40', change: '+¥1.75', icon: <TrendingUp className="h-6 w-6" />, color: 'text-industrial-warning' },
+                  { title: '今日收益', value: '¥1.60', change: '+5.2%', icon: <BarChart3 className="h-6 w-6" />, color: 'text-industrial-success' }
                 ].map((stat, index) => (
                   <div key={index} className="p-4 bg-industrial-darker rounded-lg">
                     <div className="flex items-center justify-between mb-2">
@@ -297,11 +297,11 @@ export default function HelpPage() {
                   </p>
                   <div className="grid grid-cols-2 gap-4">
                     <div className="text-center p-3 bg-industrial-darker rounded">
-                      <p className="text-2xl font-bold text-industrial-cyan">1050.2V</p>
+                      <p className="text-2xl font-bold text-industrial-cyan">12.1V</p>
                       <p className="text-sm text-gray-400">当前电压</p>
                     </div>
                     <div className="text-center p-3 bg-industrial-darker rounded">
-                      <p className="text-2xl font-bold text-industrial-success">11.25A</p>
+                      <p className="text-2xl font-bold text-industrial-success">4.85A</p>
                       <p className="text-sm text-gray-400">当前电流</p>
                     </div>
                   </div>
@@ -324,10 +324,10 @@ export default function HelpPage() {
                   <p className="text-sm text-gray-400 mb-3">
                     3D旋转展示的PVRSD设备模型，可以直观查看设备外观和状态指示灯。
                   </p>
-                  <div className="space-y-2 text-sm">
+                    <div className="space-y-2 text-sm">
                     <div className="flex justify-between">
                       <span className="text-gray-400">型号</span>
-                      <span className="text-white">PVRSD-1500V</span>
+                      <span className="text-white">SP2000S1-485</span>
                     </div>
                     <div className="flex justify-between">
                       <span className="text-gray-400">温度</span>
@@ -335,7 +335,7 @@ export default function HelpPage() {
                     </div>
                     <div className="flex justify-between">
                       <span className="text-gray-400">功率</span>
-                      <span className="text-industrial-warning">1180W</span>
+                      <span className="text-industrial-warning">58W</span>
                     </div>
                   </div>
                 </div>
@@ -347,10 +347,10 @@ export default function HelpPage() {
                   </p>
                   <div className="space-y-2 text-sm">
                     {[
-                      { name: '运行中', value: 12, color: '#00ff88' },
-                      { name: '空闲', value: 5, color: '#00d4ff' },
-                      { name: '维护中', value: 2, color: '#ff9500' },
-                      { name: '故障', value: 1, color: '#ff3b30' }
+                      { name: '运行中', value: 2, color: '#00ff88' },
+                      { name: '空闲', value: 1, color: '#00d4ff' },
+                      { name: '维护中', value: 0, color: '#ff9500' },
+                      { name: '故障', value: 0, color: '#ff3b30' }
                     ].map((status, index) => (
                       <div key={index} className="flex items-center justify-between">
                         <div className="flex items-center gap-2">
@@ -376,9 +376,9 @@ export default function HelpPage() {
               <h4 className="text-lg font-semibold text-white mb-4">最近告警</h4>
               <div className="space-y-3">
                 {[
-                  { type: 'warning', message: '设备PVRSD-003温度偏高', time: '2分钟前' },
-                  { type: 'critical', message: '设备PVRSD-007通信中断', time: '15分钟前' },
-                  { type: 'info', message: '系统备份完成', time: '1小时前' }
+                  { type: 'warning', message: 'SP2000S1-485 模块温度偏高 (38.2°C)', time: '2分钟前' },
+                  { type: 'info', message: '今日关断测试已完成 3 组', time: '25分钟前' },
+                  { type: 'info', message: '系统数据备份完成', time: '1小时前' }
                 ].map((alarm, index) => (
                   <div key={index} className={`p-3 rounded-lg border ${
                     alarm.type === 'critical' ? 'border-industrial-danger bg-industrial-danger/10' :
@@ -434,8 +434,8 @@ export default function HelpPage() {
                     <div>
                       <h6 className="text-sm font-medium text-white mb-2">测试参数设置</h6>
                       <ul className="text-sm text-gray-400 space-y-1">
-                        <li>• 电压等级：600V/1000V/1500V DC</li>
-                        <li>• 测试时长：1分钟/5分钟/60分钟</li>
+                        <li>• 电压等级：50V/100V/200V DC</li>
+                        <li>• 测试时长：1秒/2秒/5秒</li>
                         <li>• 升压速率：100-500V/s</li>
                         <li>• 测试标准：IEC 62109-1/UL 1741 SA</li>
                       </ul>
@@ -475,7 +475,7 @@ export default function HelpPage() {
                   <h5 className="font-medium text-white mb-2">实时数据显示</h5>
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                     {[
-                      { label: '电压', value: '1050.2V', color: 'text-industrial-cyan' },
+                      { label: '电压', value: '100.2V', color: 'text-industrial-cyan' },
                       { label: '泄漏电流', value: '0.003mA', color: 'text-industrial-success' },
                       { label: '绝缘电阻', value: '350.1MΩ', color: 'text-industrial-warning' },
                       { label: '温度', value: '25.3°C', color: 'text-white' }
@@ -505,7 +505,7 @@ export default function HelpPage() {
                     <div>
                       <h6 className="text-sm font-medium text-white mb-2">测试参数</h6>
                       <ul className="text-sm text-gray-400 space-y-1">
-                        <li>• 功率范围：0-1500W</li>
+                        <li>• 功率范围：0-500W</li>
                         <li>• 温度范围：-40°C到85°C</li>
                         <li>• 负载类型：阻性/感性/容性</li>
                         <li>• 测试时长：可自定义</li>
@@ -531,15 +531,15 @@ export default function HelpPage() {
                   <div className="space-y-2">
                     <div className="flex items-center gap-2">
                       <div className="w-4 h-4 bg-industrial-success rounded"></div>
-                      <span className="text-sm text-gray-300">绿色：低功率（0-500W）</span>
+                      <span className="text-sm text-gray-300">绿色：低功率（0-150W）</span>
                     </div>
                     <div className="flex items-center gap-2">
                       <div className="w-4 h-4 bg-industrial-warning rounded"></div>
-                      <span className="text-sm text-gray-300">黄色：中功率（500-1000W）</span>
+                      <span className="text-sm text-gray-300">黄色：中功率（150-300W）</span>
                     </div>
                     <div className="flex items-center gap-2">
                       <div className="w-4 h-4 bg-industrial-danger rounded"></div>
-                      <span className="text-sm text-gray-300">红色：高功率（1000-1500W）</span>
+                      <span className="text-sm text-gray-300">红色：高功率（300-500W）</span>
                     </div>
                   </div>
                 </div>
@@ -609,10 +609,10 @@ export default function HelpPage() {
               <h4 className="text-lg font-semibold text-white mb-4">存储统计</h4>
               <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
                 {[
-                  { title: '总文件数', value: '156', icon: <FileText className="h-4 w-4" />, color: 'text-industrial-cyan', desc: '156 有效 / 3 处理中' },
-                  { title: '存储空间', value: '2.4GB', icon: <HardDrive className="h-4 w-4" />, color: 'text-industrial-warning', desc: '已用 / 100 GB 总容量' },
-                  { title: '今日上传', value: '12', icon: <Upload className="h-4 w-4" />, color: 'text-industrial-success', desc: '+20% 相比昨日' },
-                  { title: '数据完整性', value: '99.8%', icon: <CheckCircle className="h-4 w-4" />, color: 'text-industrial-success', desc: '1 个文件需要修复' }
+                  { title: '总文件数', value: '8', icon: <FileText className="h-4 w-4" />, color: 'text-industrial-cyan', desc: '7 有效 / 1 处理中' },
+                  { title: '存储空间', value: '580 KB', icon: <HardDrive className="h-4 w-4" />, color: 'text-industrial-warning', desc: '已用 / 10 GB 总容量' },
+                  { title: '今日上传', value: '2', icon: <Upload className="h-4 w-4" />, color: 'text-industrial-success', desc: '本周共5份' },
+                  { title: '数据完整性', value: '99.8%', icon: <CheckCircle className="h-4 w-4" />, color: 'text-industrial-success', desc: '数据完整' }
                 ].map((stat, index) => (
                   <div key={index} className="p-4 bg-industrial-darker rounded-lg">
                     <div className="flex items-center justify-between mb-2">
@@ -891,7 +891,7 @@ export default function HelpPage() {
                       { label: '报告编号', value: 'RPT-2025-001', color: 'text-white' },
                       { label: '测试类型', value: '高压测试', color: 'text-blue-400' },
                       { label: '测试日期', value: '2025-09-14', color: 'text-green-400' },
-                      { label: '测试时长', value: '2小时15分钟', color: 'text-yellow-400' }
+                      { label: '测试时长', value: '45分钟', color: 'text-yellow-400' }
                     ].map((info, index) => (
                       <div key={index} className="p-3 bg-gray-800 rounded-lg">
                         <div className="text-xs text-gray-400 mb-1">{info.label}</div>
@@ -905,9 +905,9 @@ export default function HelpPage() {
                   <h5 className="font-medium text-white mb-2">测试条件</h5>
                   <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
                     {[
-                      { label: '电压', value: '1000V', color: 'text-blue-400' },
-                      { label: '电流', value: '1.2A', color: 'text-green-400' },
-                      { label: '功率', value: '1200W', color: 'text-yellow-400' },
+                      { label: '电压', value: '200V', color: 'text-blue-400' },
+                      { label: '电流', value: '3.1A', color: 'text-green-400' },
+                      { label: '功率', value: '620W', color: 'text-yellow-400' },
                       { label: '效率', value: '98.5%', color: 'text-purple-400' },
                       { label: '温度', value: '25.3°C', color: 'text-red-400' },
                       { label: '湿度', value: '45.2%', color: 'text-cyan-400' }
@@ -924,10 +924,10 @@ export default function HelpPage() {
                   <h5 className="font-medium text-white mb-2">测试项目结果</h5>
                   <div className="space-y-3">
                     {[
-                      { name: '绝缘电阻测试', result: '通过', value: '1250MΩ', standard: '≥100MΩ', status: 'passed' },
-                      { name: '耐压测试', result: '通过', value: '1500V', standard: '1500V/1min', status: 'passed' },
+                      { name: '绝缘电阻测试', result: '通过', value: '580MΩ', standard: '≥100MΩ', status: 'passed' },
+                      { name: '耐压测试', result: '通过', value: '200V', standard: '200V/1min', status: 'passed' },
                       { name: '泄漏电流测试', result: '通过', value: '0.05mA', standard: '≤0.1mA', status: 'passed' },
-                      { name: '局部放电测试', result: '通过', value: '2.1pC', standard: '≤10pC', status: 'passed' }
+                      { name: '关断时间测试', result: '通过', value: '49.3ms', standard: '≤100ms', status: 'passed' }
                     ].map((item, index) => (
                       <div key={index} className="p-3 bg-gray-800 rounded-lg">
                         <div className="flex items-center justify-between mb-2">
@@ -963,8 +963,8 @@ export default function HelpPage() {
                       </thead>
                       <tbody>
                         {[
-                          { param: '输入电压', measured: '1000.2V', standard: '1000±1%', deviation: '0.02%' },
-                          { param: '输出电流', measured: '1.198A', standard: '1.2±2%', deviation: '-0.17%' },
+                          { param: '输入电压', measured: '200.2V', standard: '200±1%', deviation: '0.10%' },
+                          { param: '输出电流', measured: '3.07A', standard: '3.0±5%', deviation: '2.33%' },
                           { param: '功率因数', measured: '0.995', standard: '≥0.95', deviation: '4.74%' },
                           { param: '效率', measured: '98.52%', standard: '≥95%', deviation: '3.71%' }
                         ].map((measurement, index) => (
@@ -989,8 +989,8 @@ export default function HelpPage() {
                   <h5 className="font-medium text-white mb-2">测试总结</h5>
                   <div className="bg-gray-800 p-4 rounded-lg">
                     <p className="text-gray-300 leading-relaxed">
-                      设备在1000V DC电压下通过了所有绝缘测试项目，绝缘电阻值均超过标准要求，无异常放电现象。
-                      测试过程中设备运行稳定，各项指标均符合GB/T 37408-2019标准要求。
+                      设备在200V DC电压下通过了所有绝缘测试项目，绝缘电阻值均超过标准要求，关断时间约49ms。
+                      测试过程中设备运行稳定，各项指标均符合NEC 2017/690.12快速关断要求。
                     </p>
                   </div>
                 </div>
@@ -1220,7 +1220,7 @@ export default function HelpPage() {
                       <label className="block text-sm text-gray-400 mb-1">设备ID</label>
                       <input 
                         type="text" 
-                        value="PVRSD-SYS-001" 
+                        value="SP2000S1-485" 
                         className="w-full bg-gray-800 border border-gray-600 rounded px-3 py-2 text-white"
                         readOnly
                       />
@@ -1241,7 +1241,7 @@ export default function HelpPage() {
                       <label className="block text-sm text-gray-400 mb-1">校准日期</label>
                       <input 
                         type="date" 
-                        value="2025-01-15" 
+                        value="2025-07-01" 
                         className="w-full bg-gray-800 border border-gray-600 rounded px-3 py-2 text-white"
                       />
                     </div>
@@ -1249,7 +1249,7 @@ export default function HelpPage() {
                       <label className="block text-sm text-gray-400 mb-1">下次校准</label>
                       <input 
                         type="date" 
-                        value="2025-07-15" 
+                        value="2026-01-01" 
                         className="w-full bg-gray-800 border border-gray-600 rounded px-3 py-2 text-white"
                       />
                     </div>

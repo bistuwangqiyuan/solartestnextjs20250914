@@ -14,7 +14,7 @@ export const metadata: Metadata = {
     '版本控制',
   ],
   openGraph: {
-    title: '数据管理 | PVRSD测试系统',
+    title: '数据管理 | SP2000S1-485测试系统',
     description: '实验数据文件管理与分析，支持多格式文件处理和批量操作',
     url: '/data',
   },

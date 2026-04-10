@@ -56,19 +56,16 @@ const generateRealtimeData = () => {
 }
 
 const deviceStatus = [
-  { name: '运行中', value: 12, color: '#00ff88' },
-  { name: '空闲', value: 5, color: '#00d4ff' },
-  { name: '维护中', value: 2, color: '#ff9500' },
-  { name: '故障', value: 1, color: '#ff3b30' },
+  { name: '运行中', value: 2, color: '#00ff88' },
+  { name: '空闲', value: 1, color: '#00d4ff' },
+  { name: '维护中', value: 0, color: '#ff9500' },
+  { name: '故障', value: 0, color: '#ff3b30' },
 ]
 
 const testTrends = [
-  { month: '1月', tests: 245, passRate: 98.5 },
-  { month: '2月', tests: 312, passRate: 97.8 },
-  { month: '3月', tests: 289, passRate: 99.1 },
-  { month: '4月', tests: 356, passRate: 98.9 },
-  { month: '5月', tests: 421, passRate: 99.2 },
-  { month: '6月', tests: 398, passRate: 98.7 },
+  { month: '7月', tests: 8, passRate: 97.5 },
+  { month: '8月', tests: 12, passRate: 98.2 },
+  { month: '9月', tests: 15, passRate: 99.1 },
 ]
 
 const performanceRadar = [
@@ -495,9 +492,9 @@ export default function DashboardPage() {
         </div>
         <div className="space-y-3">
           {[
-            { type: 'warning', message: '设备PVRSD-003温度偏高', time: '2分钟前' },
-            { type: 'critical', message: '设备PVRSD-007通信中断', time: '15分钟前' },
-            { type: 'info', message: '系统备份完成', time: '1小时前' },
+            { type: 'warning', message: 'SP2000S1-485 模块温度偏高 (38.2°C)', time: '2分钟前' },
+            { type: 'info', message: '今日关断测试已完成 3 组', time: '25分钟前' },
+            { type: 'info', message: '系统数据备份完成', time: '1小时前' },
           ].map((alarm, index) => (
             <div
               key={index}

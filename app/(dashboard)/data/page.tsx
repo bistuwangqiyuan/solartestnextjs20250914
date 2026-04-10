@@ -40,58 +40,109 @@ interface DataFile {
   uploadedBy: string
 }
 
-// Mock data files
+// Mock data files — based on actual test data for SP2000S1-485
 const mockFiles: DataFile[] = [
   {
     id: '1',
-    name: '高压试验_20250502_001.xlsx',
-    type: 'excel',
-    size: 1024 * 256,
-    uploadTime: new Date('2025-05-02T10:30:00'),
-    modifiedTime: new Date('2025-05-02T10:30:00'),
+    name: '试验数据-64组-耐流关断时间20250809.csv',
+    type: 'csv',
+    size: 1024 * 48,
+    uploadTime: new Date('2025-09-10T10:30:00'),
+    modifiedTime: new Date('2025-09-10T10:30:00'),
     experimentId: 'EXP-001',
     experimentType: 'high_voltage',
     status: 'valid',
-    tags: ['高压试验', '1000V', '合格'],
+    tags: ['关断时间', '64组', '10V/50A'],
     uploadedBy: '测试工程师A',
   },
   {
     id: '2',
-    name: '泄漏电流测试数据.csv',
+    name: '试验数据-120组-200V衰减时间.csv',
     type: 'csv',
-    size: 1024 * 128,
-    uploadTime: new Date('2025-05-02T14:15:00'),
-    modifiedTime: new Date('2025-05-02T14:20:00'),
+    size: 1024 * 86,
+    uploadTime: new Date('2025-09-11T14:15:00'),
+    modifiedTime: new Date('2025-09-11T14:20:00'),
     experimentId: 'EXP-002',
+    experimentType: 'high_voltage',
+    status: 'valid',
+    tags: ['衰减时间', '120组', '200V'],
+    uploadedBy: '测试工程师A',
+  },
+  {
+    id: '3',
+    name: '试验数据-30组-200V~1000V关断.csv',
+    type: 'csv',
+    size: 1024 * 35,
+    uploadTime: new Date('2025-09-23T15:19:00'),
+    modifiedTime: new Date('2025-09-23T15:20:00'),
+    experimentId: 'EXP-003',
+    experimentType: 'high_voltage',
+    status: 'valid',
+    tags: ['关断测试', '30组', '多电压'],
+    uploadedBy: '测试工程师B',
+  },
+  {
+    id: '4',
+    name: '泄漏电流测试_SP2000S1.csv',
+    type: 'csv',
+    size: 1024 * 22,
+    uploadTime: new Date('2025-09-25T09:00:00'),
+    modifiedTime: new Date('2025-09-25T09:00:00'),
+    experimentId: 'EXP-004',
     experimentType: 'leakage_current',
     status: 'valid',
     tags: ['泄漏电流', '多通道', '温度补偿'],
     uploadedBy: '测试工程师B',
   },
   {
-    id: '3',
-    name: '正常工况性能曲线.json',
-    type: 'json',
-    size: 1024 * 512,
-    uploadTime: new Date('2025-05-03T09:00:00'),
-    modifiedTime: new Date('2025-05-03T09:00:00'),
-    experimentId: 'EXP-003',
+    id: '5',
+    name: '正常工况性能数据.csv',
+    type: 'csv',
+    size: 1024 * 18,
+    uploadTime: new Date('2025-09-26T10:45:00'),
+    modifiedTime: new Date('2025-09-26T10:45:00'),
+    experimentId: 'EXP-005',
     experimentType: 'normal_operation',
-    status: 'processing',
-    tags: ['性能测试', '效率曲线'],
+    status: 'valid',
+    tags: ['正常工况', '48V/5A'],
+    uploadedBy: '测试工程师A',
+  },
+  {
+    id: '6',
+    name: '非正常工况保护测试.csv',
+    type: 'csv',
+    size: 1024 * 15,
+    uploadTime: new Date('2025-09-27T14:30:00'),
+    modifiedTime: new Date('2025-09-27T14:30:00'),
+    experimentId: 'EXP-006',
+    experimentType: 'abnormal_operation',
+    status: 'valid',
+    tags: ['过压保护', '过流保护', '短路保护'],
+    uploadedBy: '测试工程师B',
+  },
+  {
+    id: '7',
+    name: '试验数据组数统计.xlsx',
+    type: 'excel',
+    size: 1024 * 12,
+    uploadTime: new Date('2025-09-28T16:00:00'),
+    modifiedTime: new Date('2025-09-28T16:00:00'),
+    experimentType: 'simulation',
+    status: 'valid',
+    tags: ['统计', '汇总'],
     uploadedBy: '数据分析师',
   },
   {
-    id: '4',
-    name: '故障保护测试报告.pdf',
+    id: '8',
+    name: '综合测试报告_SP2000S1-485.pdf',
     type: 'pdf',
-    size: 1024 * 1024 * 2,
-    uploadTime: new Date('2025-05-01T16:45:00'),
-    modifiedTime: new Date('2025-05-01T16:45:00'),
-    experimentId: 'EXP-004',
-    experimentType: 'abnormal_operation',
-    status: 'valid',
-    tags: ['测试报告', '保护功能', '认证'],
+    size: 1024 * 320,
+    uploadTime: new Date('2025-09-30T11:00:00'),
+    modifiedTime: new Date('2025-09-30T11:00:00'),
+    experimentId: 'EXP-007',
+    experimentType: 'normal_operation',
+    status: 'processing',
+    tags: ['综合报告', '认证'],
     uploadedBy: '质量工程师',
   },
 ]
@@ -306,7 +357,7 @@ export default function DataManagementPage() {
             <HardDrive className="h-4 w-4 text-industrial-warning" />
           </div>
           <p className="text-2xl font-bold text-white">{formatFileSize(totalSize)}</p>
-          <p className="text-xs text-gray-400 mt-1">已用 / 100 GB 总容量</p>
+          <p className="text-xs text-gray-400 mt-1">已用 / 10 GB 总容量</p>
         </motion.div>
         
         <motion.div
@@ -319,8 +370,8 @@ export default function DataManagementPage() {
             <span className="text-sm text-gray-400">今日上传</span>
             <Upload className="h-4 w-4 text-industrial-success" />
           </div>
-          <p className="text-2xl font-bold text-white">12</p>
-          <p className="text-xs text-gray-400 mt-1">+20% 相比昨日</p>
+          <p className="text-2xl font-bold text-white">2</p>
+          <p className="text-xs text-gray-400 mt-1">本周共5份</p>
         </motion.div>
         
         <motion.div

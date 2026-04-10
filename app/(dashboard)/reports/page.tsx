@@ -42,26 +42,26 @@ const mockReports: TestReport[] = [
     title: '光伏快速关断器高压绝缘测试报告',
     testType: 'high-voltage',
     date: '2025-09-14',
-    duration: '2小时15分钟',
+    duration: '45分钟',
     status: 'passed',
-    deviceModel: 'PVRSD-1500-A',
-    voltage: 1000,
-    current: 1.2,
-    power: 1200,
+    deviceModel: 'SP2000S1-485',
+    voltage: 200,
+    current: 3.1,
+    power: 620,
     efficiency: 98.5,
     temperature: 25.3,
     humidity: 45.2,
-    summary: '设备在1000V DC电压下通过了所有绝缘测试项目，绝缘电阻值均超过标准要求，无异常放电现象。测试过程中设备运行稳定，各项指标均符合GB/T 37408-2019标准要求。',
+    summary: '设备在200V DC电压下通过了所有绝缘测试项目，绝缘电阻值均超过标准要求，无异常放电现象。关断时间约49ms，符合NEC 2017/690.12快速关断要求。',
     details: {
       testItems: [
-        { name: '绝缘电阻测试', result: '通过', status: 'passed', value: 1250, unit: 'MΩ', standard: '≥100MΩ' },
-        { name: '耐压测试', result: '通过', status: 'passed', value: 1500, unit: 'V', standard: '1500V/1min' },
+        { name: '绝缘电阻测试', result: '通过', status: 'passed', value: 580, unit: 'MΩ', standard: '≥100MΩ' },
+        { name: '耐压测试', result: '通过', status: 'passed', value: 200, unit: 'V', standard: '200V/1min' },
         { name: '泄漏电流测试', result: '通过', status: 'passed', value: 0.05, unit: 'mA', standard: '≤0.1mA' },
-        { name: '局部放电测试', result: '通过', status: 'passed', value: 2.1, unit: 'pC', standard: '≤10pC' }
+        { name: '关断时间测试', result: '通过', status: 'passed', value: 49.3, unit: 'ms', standard: '≤100ms' }
       ],
       measurements: [
-        { parameter: '输入电压', measured: 1000.2, standard: '1000±1%', unit: 'V', deviation: 0.02 },
-        { parameter: '输出电流', measured: 1.198, standard: '1.2±2%', unit: 'A', deviation: -0.17 },
+        { parameter: '输入电压', measured: 200.2, standard: '200±1%', unit: 'V', deviation: 0.10 },
+        { parameter: '输出电流', measured: 3.07, standard: '3.0±5%', unit: 'A', deviation: 2.33 },
         { parameter: '功率因数', measured: 0.995, standard: '≥0.95', unit: '', deviation: 4.74 },
         { parameter: '效率', measured: 98.52, standard: '≥95%', unit: '%', deviation: 3.71 }
       ]
@@ -72,12 +72,12 @@ const mockReports: TestReport[] = [
     title: '泄漏电流精密测量报告',
     testType: 'leakage',
     date: '2025-09-13',
-    duration: '1小时45分钟',
+    duration: '30分钟',
     status: 'warning',
-    deviceModel: 'PVRSD-1500-B',
-    voltage: 600,
-    current: 0.8,
-    power: 480,
+    deviceModel: 'SP2000S1-485',
+    voltage: 55,
+    current: 4.8,
+    power: 264,
     efficiency: 97.8,
     temperature: 28.7,
     humidity: 52.1,
@@ -102,28 +102,28 @@ const mockReports: TestReport[] = [
     title: '正常工况性能测试报告',
     testType: 'normal',
     date: '2025-09-12',
-    duration: '3小时30分钟',
+    duration: '1小时20分钟',
     status: 'passed',
-    deviceModel: 'PVRSD-1500-C',
-    voltage: 800,
-    current: 1.5,
-    power: 1200,
-    efficiency: 99.1,
+    deviceModel: 'SP2000S1-485',
+    voltage: 48,
+    current: 5.2,
+    power: 250,
+    efficiency: 96.8,
     temperature: 22.8,
     humidity: 38.5,
-    summary: '设备在正常工况下表现优异，所有性能指标均超过设计要求，效率达到99.1%，温升控制良好。测试涵盖了从10%到110%负载范围，设备运行稳定可靠。',
+    summary: '设备在正常工况(48V/5A)下表现优异，效率达到96.8%，温升控制良好。测试涵盖了从10%到100%负载范围，设备运行稳定可靠，功率约250W。',
     details: {
       testItems: [
-        { name: '满载效率测试', result: '通过', status: 'passed', value: 99.1, unit: '%', standard: '≥95%' },
-        { name: '轻载效率测试', result: '通过', status: 'passed', value: 96.8, unit: '%', standard: '≥90%' },
-        { name: '温升测试', result: '通过', status: 'passed', value: 35.2, unit: '°C', standard: '≤40°C' },
-        { name: '纹波测试', result: '通过', status: 'passed', value: 1.2, unit: '%', standard: '≤5%' }
+        { name: '满载效率测试', result: '通过', status: 'passed', value: 96.8, unit: '%', standard: '≥95%' },
+        { name: '轻载效率测试', result: '通过', status: 'passed', value: 94.2, unit: '%', standard: '≥90%' },
+        { name: '温升测试', result: '通过', status: 'passed', value: 32.5, unit: '°C', standard: '≤40°C' },
+        { name: '纹波测试', result: '通过', status: 'passed', value: 1.8, unit: '%', standard: '≤5%' }
       ],
       measurements: [
-        { parameter: '满载效率', measured: 99.12, standard: '≥95%', unit: '%', deviation: 4.33 },
-        { parameter: '50%负载效率', measured: 98.45, standard: '≥92%', unit: '%', deviation: 7.01 },
-        { parameter: '10%负载效率', measured: 96.78, standard: '≥90%', unit: '%', deviation: 7.53 },
-        { parameter: '最大温升', measured: 35.2, standard: '≤40°C', unit: '°C', deviation: -12.0 }
+        { parameter: '满载效率', measured: 96.82, standard: '≥95%', unit: '%', deviation: 1.92 },
+        { parameter: '50%负载效率', measured: 95.60, standard: '≥92%', unit: '%', deviation: 3.91 },
+        { parameter: '10%负载效率', measured: 94.15, standard: '≥90%', unit: '%', deviation: 4.61 },
+        { parameter: '最大温升', measured: 32.5, standard: '≤40°C', unit: '°C', deviation: -18.75 }
       ]
     }
   },
@@ -132,16 +132,16 @@ const mockReports: TestReport[] = [
     title: '非正常工况保护功能测试报告',
     testType: 'abnormal',
     date: '2025-09-11',
-    duration: '4小时20分钟',
+    duration: '55分钟',
     status: 'failed',
-    deviceModel: 'PVRSD-1500-D',
-    voltage: 1200,
-    current: 2.0,
-    power: 1800,
+    deviceModel: 'SP2000S1-485',
+    voltage: 90,
+    current: 8.5,
+    power: 765,
     efficiency: 85.2,
     temperature: 45.6,
     humidity: 60.3,
-    summary: '设备在过流保护测试中响应时间超出标准要求，需要调整保护电路参数。其他保护功能正常，建议优化过流检测算法以提高响应速度。',
+    summary: '设备在过流保护测试中响应时间超出标准要求(8.5ms>5ms)，需要调整保护电路参数。过压保护(90V)和短路保护功能正常，建议优化过流检测算法。',
     details: {
       testItems: [
         { name: '过压保护测试', result: '通过', status: 'passed', value: 1.2, unit: 'ms', standard: '≤5ms' },
@@ -150,7 +150,7 @@ const mockReports: TestReport[] = [
         { name: '过温保护测试', result: '通过', status: 'passed', value: 85.2, unit: '°C', standard: '85±2°C' }
       ],
       measurements: [
-        { parameter: '过压保护阈值', measured: 1320, standard: '1300±20V', unit: 'V', deviation: 1.54 },
+        { parameter: '过压保护阈值', measured: 91.5, standard: '90±5V', unit: 'V', deviation: 1.67 },
         { parameter: '过流保护响应时间', measured: 8.5, standard: '≤5ms', unit: 'ms', deviation: 70.0 },
         { parameter: '短路保护响应时间', measured: 0.8, standard: '≤2ms', unit: 'ms', deviation: -60.0 },
         { parameter: '过温保护阈值', measured: 85.2, standard: '85±2°C', unit: '°C', deviation: 0.24 }
@@ -162,13 +162,13 @@ const mockReports: TestReport[] = [
     title: '环境适应性测试报告',
     testType: 'environmental',
     date: '2025-09-10',
-    duration: '8小时15分钟',
+    duration: '6小时30分钟',
     status: 'passed',
-    deviceModel: 'PVRSD-1500-E',
-    voltage: 900,
-    current: 1.3,
-    power: 1170,
-    efficiency: 98.2,
+    deviceModel: 'SP2000S1-485',
+    voltage: 48,
+    current: 5.0,
+    power: 240,
+    efficiency: 96.2,
     temperature: 35.8,
     humidity: 75.2,
     summary: '设备在各种环境条件下均能正常工作，包括高温、高湿、低温等极端条件。所有测试项目均通过，证明设备具有良好的环境适应性。',
@@ -180,9 +180,9 @@ const mockReports: TestReport[] = [
         { name: '振动测试', result: '通过', status: 'passed', value: 10, unit: 'g', standard: '10g/2h' }
       ],
       measurements: [
-        { parameter: '高温效率', measured: 97.8, standard: '≥95%', unit: '%', deviation: 2.95 },
-        { parameter: '低温效率', measured: 98.1, standard: '≥95%', unit: '%', deviation: 3.26 },
-        { parameter: '高湿绝缘电阻', measured: 850, standard: '≥100MΩ', unit: 'MΩ', deviation: 750.0 },
+        { parameter: '高温效率', measured: 95.3, standard: '≥95%', unit: '%', deviation: 0.32 },
+        { parameter: '低温效率', measured: 96.1, standard: '≥95%', unit: '%', deviation: 1.16 },
+        { parameter: '高湿绝缘电阻', measured: 420, standard: '≥100MΩ', unit: 'MΩ', deviation: 320.0 },
         { parameter: '振动后精度', measured: 99.2, standard: '≥98%', unit: '%', deviation: 1.22 }
       ]
     }

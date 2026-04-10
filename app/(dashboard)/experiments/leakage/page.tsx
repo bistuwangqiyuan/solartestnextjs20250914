@@ -91,7 +91,7 @@ export default function LeakageCurrentTestPage() {
     pressure: 101.3,
   })
   const [showSettings, setShowSettings] = useState(false)
-  const [testVoltage, setTestVoltage] = useState(1100) // 110% of rated voltage
+  const [testVoltage, setTestVoltage] = useState(55) // 110% of 50V rated voltage
   const [accuracy, setAccuracy] = useState(0.1) // μA
   const intervalRef = useRef<NodeJS.Timeout | null>(null)
 

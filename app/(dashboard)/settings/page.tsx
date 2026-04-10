@@ -109,9 +109,9 @@ const defaultSettings: SystemSettings = {
   device: {
     sampleRate: 1000,
     bufferSize: 1024,
-    calibrationDate: '2025-01-15',
-    nextCalibration: '2025-07-15',
-    deviceId: 'PVRSD-SYS-001'
+    calibrationDate: '2025-07-01',
+    nextCalibration: '2026-01-01',
+    deviceId: 'SP2000S1-485'
   },
   network: {
     apiEndpoint: 'https://api.pvrsd.com',
