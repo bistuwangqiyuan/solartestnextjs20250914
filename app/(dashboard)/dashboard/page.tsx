@@ -11,6 +11,10 @@ import {
   Users,
   Clock,
   BarChart3,
+  Thermometer,
+  Droplets,
+  Sun,
+  MapPin,
 } from 'lucide-react'
 import {
   LineChart,
@@ -111,9 +115,16 @@ function DeviceModel3D() {
   )
 }
 
+interface WeatherData {
+  temperature: number
+  humidity: number
+  radiation: number
+}
+
 export default function DashboardPage() {
   const [realtimeData, setRealtimeData] = useState<any[]>([])
   const [currentStats, setCurrentStats] = useState(generateRealtimeData())
+  const [weather, setWeather] = useState<WeatherData | null>(null)
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -122,6 +133,27 @@ export default function DashboardPage() {
       setRealtimeData(prev => [...prev.slice(-19), newData].slice(-20))
     }, 1000)
 
+    return () => clearInterval(interval)
+  }, [])
+
+  useEffect(() => {
+    const fetchWeather = async () => {
+      try {
+        const res = await fetch(
+          'https://api.open-meteo.com/v1/forecast?latitude=39.04&longitude=117.72&current=temperature_2m,relative_humidity_2m,direct_radiation'
+        )
+        const data = await res.json()
+        setWeather({
+          temperature: data.current.temperature_2m,
+          humidity: data.current.relative_humidity_2m,
+          radiation: data.current.direct_radiation,
+        })
+      } catch {
+        // silently fail, keep null
+      }
+    }
+    fetchWeather()
+    const interval = setInterval(fetchWeather, 300000)
     return () => clearInterval(interval)
   }, [])
 
@@ -166,6 +198,51 @@ export default function DashboardPage() {
           <span>最后更新: {currentStats.timestamp}</span>
         </div>
       </div>
+
+      {/* Weather info */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.05 }}
+        className="data-card"
+      >
+        <div className="flex items-center justify-between mb-3">
+          <div className="flex items-center gap-2">
+            <MapPin className="h-4 w-4 text-industrial-cyan" />
+            <span className="text-sm font-medium text-white">天津滨海泰达科技发展中心</span>
+          </div>
+          <span className="text-xs text-gray-400">每5分钟更新</span>
+        </div>
+        <div className="grid grid-cols-3 gap-4">
+          <div className="flex items-center gap-3 p-3 bg-industrial-darker rounded-lg">
+            <Thermometer className="h-8 w-8 text-industrial-warning" />
+            <div>
+              <p className="text-xl font-bold text-white">
+                {weather ? `${weather.temperature.toFixed(1)}°C` : '--'}
+              </p>
+              <p className="text-xs text-gray-400">温度</p>
+            </div>
+          </div>
+          <div className="flex items-center gap-3 p-3 bg-industrial-darker rounded-lg">
+            <Droplets className="h-8 w-8 text-industrial-cyan" />
+            <div>
+              <p className="text-xl font-bold text-white">
+                {weather ? `${weather.humidity.toFixed(0)}%` : '--'}
+              </p>
+              <p className="text-xs text-gray-400">湿度</p>
+            </div>
+          </div>
+          <div className="flex items-center gap-3 p-3 bg-industrial-darker rounded-lg">
+            <Sun className="h-8 w-8 text-industrial-success" />
+            <div>
+              <p className="text-xl font-bold text-white">
+                {weather ? `${weather.radiation.toFixed(0)} W/m²` : '--'}
+              </p>
+              <p className="text-xs text-gray-400">光照度</p>
+            </div>
+          </div>
+        </div>
+      </motion.div>
 
       {/* Stats grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
